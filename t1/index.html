@@ -5,9 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <!-- The page loads only its own files, plus Google's own sign-in script (it cannot be pinned by a hash; on purpose,
      spec §7 rule 5), and talks only to itself, to Google's sign-in and to the sign-in service on script.google.com.
-     No inline script or style. (GitHub Pages sets no headers, so the policy is a meta tag; it cannot say who may frame
+     No inline script, and no inline style of our own; inline styles are let through because Google's script styles
+     its button that way (b1.3). (GitHub Pages sets no headers, so the policy is a meta tag; it cannot say who may frame
      the page.) tests/part_a.test.js holds this exact line as a contract. -->
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' https://accounts.google.com/gsi/client; style-src 'self' https://accounts.google.com/gsi/style; img-src 'self'; manifest-src 'self'; connect-src 'self' https://accounts.google.com/gsi/ https://script.google.com https://script.googleusercontent.com; frame-src https://accounts.google.com/gsi/; worker-src 'self'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' https://accounts.google.com/gsi/client; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; img-src 'self'; manifest-src 'self'; connect-src 'self' https://accounts.google.com/gsi/ https://script.google.com https://script.googleusercontent.com; frame-src https://accounts.google.com/gsi/; worker-src 'self'; base-uri 'none'; form-action 'none'">
 <meta name="theme-color" content="#0f1a20">
 <meta name="robots" content="noindex">
 <meta name="referrer" content="no-referrer">
