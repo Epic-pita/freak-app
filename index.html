@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<!-- The page loads only its own files, plus Google's own sign-in script (it cannot be pinned by a hash; on purpose,
+     spec §7 rule 5), and talks only to itself, to Google's sign-in and to the sign-in service on script.google.com.
+     No inline script or style. (GitHub Pages sets no headers, so the policy is a meta tag; it cannot say who may frame
+     the page.) tests/part_a.test.js holds this exact line as a contract. -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' https://accounts.google.com/gsi/client; style-src 'self' https://accounts.google.com/gsi/style; img-src 'self'; manifest-src 'self'; connect-src 'self' https://accounts.google.com/gsi/ https://script.google.com https://script.googleusercontent.com; frame-src https://accounts.google.com/gsi/; worker-src 'self'; base-uri 'none'; form-action 'none'">
+<meta name="theme-color" content="#0f1a20">
+<meta name="robots" content="noindex">
+<meta name="referrer" content="no-referrer">
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="icon" href="./icon-192.png">
+<link rel="apple-touch-icon" href="./icon-192.png">
+<link rel="stylesheet" href="./app.css">
+<title>FREAK צוות</title>
+</head>
+<body>
+<header id="top">
+  <div id="topline">
+    <span id="title">FREAK צוות</span>
+    <span id="hello" class="hide"></span>
+    <button id="gear" type="button" aria-label="התאמה" aria-expanded="false" aria-controls="setup">התאמה</button>
+  </div>
+</header>
+
+<main class="wrap">
+  <div id="msg" class="hide" role="status"></div>
+
+  <section id="signin" class="box hide" aria-label="כניסה">
+    <h2>כניסה</h2>
+    <p class="dim">נכנסים פעם אחת עם חשבון הגוגל, ונשארים מחוברים בטלפון הזה. לא נשמרים אצלנו שם, מייל או טלפון.</p>
+    <div id="gbtn"></div>
+    <div id="proof" class="hide">
+      <label for="proofIn">בפעם הראשונה צריך אישור נוסף: להדביק כאן את הקישור האישי של הסידור, ואז ללחוץ שוב על הכניסה.</label>
+      <input id="proofIn" type="url" dir="ltr" autocomplete="off" placeholder="https://">
+    </div>
+    <div id="signMsg" class="formmsg" role="status"></div>
+  </section>
+
+  <section id="setup" class="box hide" aria-label="התאמה">
+    <div id="pickBox">
+      <h2>מה להציג בטלפון הזה?</h2>
+      <p class="dim">הסימון רק מסדר את המסך. כל דף נפתח כמו היום, עם הקישור או הקוד שלו.</p>
+      <div id="picks"></div>
+    </div>
+    <div id="roleBox" class="hide">
+      <h2>הכפתורים מוצגים לפי התפקיד</h2>
+      <p class="dim">חסר כפתור? לפנות למנהל.</p>
+    </div>
+
+    <h3>קישורים שמדביקים פעם אחת</h3>
+    <p class="dim">הכתובת נשמרת רק בטלפון הזה.</p>
+    <div id="slots"></div>
+
+    <h3>כפתור משלי</h3>
+    <p class="dim">למשל גיליון שנפתח הרבה. נשמר רק בטלפון הזה.</p>
+    <div id="myList"></div>
+    <div class="form">
+      <label for="myName">שם הכפתור</label>
+      <input id="myName" type="text" maxlength="24" autocomplete="off">
+      <label for="myUrl">הקישור</label>
+      <input id="myUrl" type="url" dir="ltr" inputmode="url" autocomplete="off" placeholder="https://">
+      <button id="myAdd" type="button" class="primary">להוסיף</button>
+      <div id="myMsg" class="formmsg" role="status"></div>
+    </div>
+
+    <div id="ownerBox" class="hide">
+      <h3>שימוש בשבועות האחרונים</h3>
+      <p class="dim">כמה לחיצות היו על כל כפתור, לפי תפקיד. בלי שמות. רק מי שמסומן כבעלים רואה את הטבלה הזאת.</p>
+      <button id="usageBtn" type="button">להציג</button>
+      <div id="usage"></div>
+    </div>
+
+    <div id="outBox" class="hide">
+      <h3>יציאה</h3>
+      <div class="rowbtns">
+        <button id="outHere" type="button">מהטלפון הזה</button>
+        <button id="outAll" type="button">מכל המכשירים</button>
+      </div>
+      <div id="outMsg" class="formmsg" role="status"></div>
+    </div>
+
+    <button id="setupDone" type="button" class="primary wide">סיימתי</button>
+  </section>
+
+  <div id="groups"></div>
+
+  <button id="install" type="button" class="wide hide">להוסיף למסך הבית</button>
+  <p id="iosHint" class="dim center hide">באייפון: כפתור השיתוף ואז "הוסף למסך הבית".</p>
+
+  <footer id="foot">
+    <p>כל דף נפתח כמו היום, עם הקישור או הקוד שלו.</p>
+    <p>את האייקונים הישנים לא מוחקים בינתיים: מה שעוד לא נשלח שמור בהם.</p>
+    <p id="build"></p>
+  </footer>
+</main>
+
+<script src="./config.js"></script>
+<script src="./pages.js"></script>
+<script src="./logic.js"></script>
+<script src="./app.js"></script>
+</body>
+</html>
