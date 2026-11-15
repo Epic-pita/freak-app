@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<!-- A static page: the text approved on 16/11/2026 (cards L15-PRIV and L15-PRIV-r2), word for word. No script at all; it loads
+     only the app's own style sheet and icon. tests/part_a.test.js holds this policy and the approved text
+     (tests/privacy_approved.he.txt) as a contract: to change a word here, the text is approved again first. -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self'; img-src 'self'; base-uri 'none'; form-action 'none'">
+<meta name="theme-color" content="#0f1a20">
+<meta name="robots" content="noindex">
+<meta name="referrer" content="no-referrer">
+<link rel="icon" href="./icon-192.png">
+<link rel="stylesheet" href="./app.css">
+<title>FREAK צוות: פרטיות</title>
+</head>
+<body>
+<header id="top">
+  <div id="topline">
+    <span id="title">FREAK צוות</span>
+    <a class="back" href="./">חזרה לאפליקציה</a>
+  </div>
+</header>
+
+<main class="wrap doc">
+  <h1>FREAK צוות: מה נשמר עליכם בכניסה</h1>
+  <p>האפליקציה היא לצוות של FREAK TLV בלבד. נכנסים אליה עם חשבון גוגל, פעם אחת בכל מכשיר.</p>
+
+  <h2>מה אנחנו מקבלים מגוגל</h2>
+  <p>כתובת המייל של החשבון ומספר מזהה של החשבון. את המייל משווים לרשימת העובדים כדי לדעת מי נכנס, ולא שומרים אותו. גוגל שולח גם שם ותמונת פרופיל; אנחנו לא משתמשים בהם ולא שומרים אותם. לא מבקשים מגוגל שום דבר אחר: לא מיילים, לא קבצים, לא יומן, לא אנשי קשר ולא מיקום. אם חשבון הגוגל שלכם רשום על מייל שאינו ג'ימייל, תתבקשו בכניסה הראשונה להדביק את הקישור האישי שלכם לסידור. הקישור נבדק פעם אחת ולא נשמר.</p>
+
+  <h2>מה נשמר אצלנו</h2>
+  <ul>
+    <li>מספר העובד שלכם והתפקיד (עובד, מנחה, מנהל).</li>
+    <li>קוד מוצפן שמחליף את חשבון הגוגל. אי אפשר לשחזר ממנו את המייל.</li>
+    <li>מתי נכנסתם ויצאתם, מתי פתחתם את האפליקציה בפעם האחרונה (מתעדכן לכל היותר פעמיים ביום), ומאיזה סוג מכשיר (למשל "אנדרואיד, כרום").</li>
+    <li>כמה פעמים נלחץ כל כפתור בשבוע, לפי תפקיד, בלי מספר עובד ובלי שם.</li>
+  </ul>
+  <p>שם, מייל, טלפון ותמונה לא נשמרים באפליקציה. השם והמייל נשארים רק ברשימת העובדים של החנות, שם הם היו גם קודם.</p>
+
+  <h2>מה נשמר בטלפון שלכם</h2>
+  <p>מפתח כניסה והשם שלכם, כדי שלא תצטרכו להיכנס כל פעם מחדש. הכניסה נשארת פתוחה כל עוד פתחתם את האפליקציה לפחות פעם ב-30 יום. לחיצה על "יציאה" מוחקת אותם מהמכשיר.</p>
+
+  <h2>מי רואה את המידע</h2>
+  <p>רק מנהל המערכת של FREAK. המידע לא עובר לאף גורם אחר, לא נמכר ולא משמש לפרסום.</p>
+
+  <h2>מי שעוזב</h2>
+  <p>כשהסטטוס שלכם ברשימת העובדים משתנה ל"עזב", הכניסה נחסמת בפעם הבאה שהאפליקציה נפתחת. אם תבקשו, השורות שלכם יימחקו.</p>
+
+  <h2>הדפים שנפתחים מהאפליקציה</h2>
+  <p>הסידור, שעון הנוכחות, הספירה ושאר הדפים הם מערכות נפרדות, והם רושמים את מה שרשמו עד היום. הדף הזה מתאר רק את הכניסה.</p>
+
+  <h2>שאלות ובקשות</h2>
+  <p>פנו למנהל שלכם בחנות.</p>
+</main>
+
+<footer id="foot" class="wrap">
+  <p>הטקסט אושר ב-16/11/2026.</p>
+</footer>
+</body>
+</html>

@@ -12,12 +12,13 @@
  * the saved copy answers when the network fails or is slow. Nothing but this page's own GET requests is touched.
  */
 const PREFIX = 'freak-app-';
-const VERSION = 'b1-2';
+const VERSION = 'b1-5';
 const CACHE = PREFIX + VERSION;
 const FUSE_MS = 3500;
 const SHELL = [
   './',
   './index.html',
+  './privacy.html',
   './app.css',
   './app.js',
   './config.js',
