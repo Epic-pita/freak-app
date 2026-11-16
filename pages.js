@@ -4,16 +4,18 @@
  * PUBLIC FILE (GitHub Pages). Rules for every line here:
  *   - a button points only at a page that is already public on this origin (/freak-schedule/, /freak-pos/);
  *   - no key, token, code, deployment id, sheet id, name, phone or e-mail, ever;
- *   - a page whose address is not public (the D&D apps on Google's address, the management's claude.ai pages) is a SLOT:
- *     the button exists, the address is pasted once on the phone and stays on that phone only. With the sign-in
- *     (part B) those addresses come from the sign-in service by role, still never from this file.
+ *   - a page whose address is not public (the D&D apps on Google's address) is a SLOT: the button exists, the address
+ *     is pasted once on the phone and stays on that phone only. With the sign-in (part B) those addresses come from
+ *     the sign-in service by role, still never from this file.
+ *   - a button that belongs to one person (the management's own pages) is not in this file at all (b1.7): it comes
+ *     from the sign-in service to that person's signed-in phone, with the label kept in the private sheet.
  * tests/part_a.test.js holds these rules as a contract.
  */
 (function (root) {
   'use strict';
 
   var CATALOG = {
-    version: 'b1.5',
+    version: 'b1.8',
     origin: 'https://epic-pita.github.io',
     groups: [
       { id: 'all', he: 'לכל הצוות', fixed: true, buttons: [
@@ -33,9 +35,7 @@
       { id: 'owner', he: 'ניהול העסק', buttons: [
         { id: 'home', he: 'מסך הבית', sub: 'כל החנות בדף אחד', path: '/freak-pos/home.html' },
         { id: 'suppliers', he: 'משימות הספקים', sub: 'מה להזמין ומה בדרך', path: '/freak-pos/suppliers.html' },
-        { id: 'order', he: 'הזמנה מספק', sub: 'דף ההזמנה', path: '/freak-pos/order.html' },
-        { id: 'board', he: 'הלוח', sub: 'מצב הפרויקט', slot: 'claude' },
-        { id: 'questions', he: 'שאלות ומשימות', sub: 'מה מחכה לך', slot: 'claude' }
+        { id: 'order', he: 'הזמנה מספק', sub: 'דף ההזמנה', path: '/freak-pos/order.html' }
       ] },
       { id: 'guides', he: 'מדריכים', fixed: true, folded: true, buttons: [
         { id: 'g_schedule', he: 'מדריך הסידור', path: '/freak-schedule/guide.html' },
@@ -50,6 +50,7 @@
     slotKinds: {
       gas: { re: /^https:\/\/script\.google\.com\/macros\/s\/[A-Za-z0-9_-]{20,120}\/exec(\?[A-Za-z0-9_=&.-]{1,80})?$/,
              hint: 'הקישור של האפליקציה, כמו שהוא התקבל (מתחיל ב-https://script.google.com)' },
+      // no button uses this kind since b1.7 (the two that did left this file); kept on purpose, it costs nothing
       claude: { re: /^https:\/\/claude\.ai\/artifact\/[A-Za-z0-9_-]{6,80}$/,
                 hint: 'הקישור של הדף (מתחיל ב-https://claude.ai/artifact)' }
     },
