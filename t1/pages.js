@@ -13,7 +13,7 @@
   'use strict';
 
   var CATALOG = {
-    version: 'b1.5',
+    version: 'b1.6',
     origin: 'https://epic-pita.github.io',
     groups: [
       { id: 'all', he: 'לכל הצוות', fixed: true, buttons: [

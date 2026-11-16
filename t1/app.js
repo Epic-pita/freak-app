@@ -48,6 +48,11 @@
   if (firstRun) state.picks = L.firstPicks(CAT, { l1_key: has('l1_key'), fs_key: has('fs_key') });
 
   function signedIn() { return !!(state.sid && state.me); }
+  // b1.6 (decided 16/11/2026, card L15-GUEST): once the sign-in is on, a phone that is not signed in gets no buttons, only the sign-in
+  // box and the guides. Otherwise nobody has a reason to sign in and the use cannot be read. This hides the buttons on
+  // this page; it does not lock the pages behind them (each still opens with its own link or code until it joins the
+  // sign-in). With the sign-in off (config.js empty) nothing changes.
+  function waiting() { return SIGNIN && !signedIn(); }
   function picksNow() { return signedIn() ? state.me.groups : state.picks; }
   function slotUrlNow(id) { return (signedIn() && state.me.slots[id]) || state.slots[id] || ''; }
 
@@ -119,9 +124,12 @@
     var main = $('groups');
     clear(main);
     var shown = L.shownGroups(CAT, picksNow());
-    shown.filter(function (g) { return !g.folded; }).forEach(function (g) { main.appendChild(groupNode(g)); });
-    if (signedIn() && state.me.extra.length) main.appendChild(plainGroup('עוד', state.me.extra.map(function (x) { return { page: x.id, he: x.he, sub: x.sub, url: x.url }; })));
-    if (state.my.length) main.appendChild(plainGroup('הכפתורים שלי', state.my.map(function (m) { return { page: 'my', he: m.he, url: m.url }; })));
+    if (!waiting()) {
+      shown.filter(function (g) { return !g.folded; }).forEach(function (g) { main.appendChild(groupNode(g)); });
+      if (signedIn() && state.me.extra.length) main.appendChild(plainGroup('עוד', state.me.extra.map(function (x) { return { page: x.id, he: x.he, sub: x.sub, url: x.url }; })));
+      if (state.my.length) main.appendChild(plainGroup('הכפתורים שלי', state.my.map(function (m) { return { page: 'my', he: m.he, url: m.url }; })));
+    }
+    // the guides (the folded group) are help pages: they stay for everyone
     shown.filter(function (g) { return g.folded; }).forEach(function (g) { main.appendChild(groupNode(g)); });
   }
 
@@ -222,11 +230,15 @@
   function renderAll() {
     var inn = signedIn();
     show('signin', SIGNIN && !inn);
+    // nothing to adjust before the sign-in: the adjust button and its panel wait with the buttons
+    show('gear', !waiting());
+    if (waiting()) { show('setup', false); $('gear').setAttribute('aria-expanded', 'false'); }
     show('pickBox', !inn); show('roleBox', inn); show('outBox', inn); show('ownerBox', inn && state.me.owner);
     var hello = $('hello');
     hello.textContent = inn && state.me.name ? 'שלום, ' + state.me.name : '';
     hello.classList.toggle('hide', !hello.textContent);
-    renderPicks(); renderSlots(); renderMy(); renderGroups();
+    if (!waiting()) { renderPicks(); renderSlots(); renderMy(); }   // the panel is hidden while waiting: nothing to build
+    renderGroups();
   }
 
   /* ---------- the sign-in (part B) ---------- */
@@ -305,12 +317,15 @@
   }
   function refresh() {
     var asked = state.sid;
+    // A phone that holds a session but no stored answer has no buttons to show yet (b1.6): it says what it is doing.
+    if (!state.me) $('signMsg').textContent = 'בודק את הכניסה השמורה בטלפון…';
     return post({ a: 'me', sid: asked }).then(function (ans) {
       if (state.sid !== asked) return;                                 // signed out or signed in again meanwhile: not about us
       var fate = L.sessionFate(ans);
-      if (fate === 'ok') { if (keepAnswer(ans)) renderAll(); return; }
-      if (fate === 'drop') forget(ans.code === 'not_active' ? SIGN_TEXT.not_active : 'צריך להיכנס שוב.');
+      if (fate === 'ok') { if (keepAnswer(ans)) { $('signMsg').textContent = ''; renderAll(); } return; }
+      if (fate === 'drop') { forget(ans.code === 'not_active' ? SIGN_TEXT.not_active : 'צריך להיכנס שוב.'); return; }
       // anything else (no signal, a slow answer): the phone keeps its session and the buttons it had
+      if (!state.me) $('signMsg').textContent = 'לא הצלחתי לבדוק את הכניסה כרגע. לבדוק קליטה ולפתוח שוב.';
     });
   }
   function signOut(everywhere) {
