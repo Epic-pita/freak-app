@@ -12,6 +12,9 @@
   if (window.top !== window.self) return;
   var L = window.FreakLogic, CAT = window.FREAK_PAGES, CFG = window.FREAK_CONFIG || {};
   var SIGNIN = !!(CFG.api && CFG.clientId);
+  // b1.8: a copy whose config says `test: true` talks to a sheet of invented people. It says so on the page, so that a
+  // real person who was sent its address is told this is a test copy and not that he is missing from the staff list.
+  var TEST_COPY = SIGNIN && CFG.test === true;
   // Own storage keys, all with one prefix. Other pages on this origin keep theirs.
   var LS = { picks: 'freak_app_groups', slots: 'freak_app_slots', my: 'freak_app_my', sid: 'freak_app_session', me: 'freak_app_me' };
   var $ = function (id) { return document.getElementById(id); };
@@ -251,6 +254,9 @@
     second_proof: 'בפעם הראשונה צריך אישור נוסף: להדביק למטה את הקישור האישי של הסידור, ואז ללחוץ שוב על הכניסה.',
     retry: 'לא הצלחתי להתחבר כרגע. לנסות שוב בעוד רגע.'
   };
+  // The test copy's own words for a missing row. Kept out of SIGN_TEXT on purpose: that table is indexed by the code the
+  // service sends, and no answer of a service may make the real page say it is a test copy.
+  var NO_ROW_TEST = 'זה עותק בדיקה, ורשימת העובדים שלו מומצאת. לא חסר אצלך שום דבר: האפליקציה האמיתית נמצאת בקישור אחר.';
   var ROLE_HE = { owner: 'בעלים', manager: 'מנהל', dm: 'מנחה', worker: 'עובד', guest: 'לא מחובר' };
   var nonce = '', issued = [], busy = false;
 
@@ -311,7 +317,8 @@
       var code = ans && ans.code;
       var again = code === 'second_proof' && !!body.key && !!pasted;   // the person pasted a link and it was not theirs
       if (code === 'second_proof') show('proof', true);
-      $('signMsg').textContent = again ? 'הקישור הזה לא התאים. להדביק את הקישור האישי של הסידור, כולו, וללחוץ שוב על הכניסה.' : pick(SIGN_TEXT, code, SIGN_TEXT.retry);
+      $('signMsg').textContent = again ? 'הקישור הזה לא התאים. להדביק את הקישור האישי של הסידור, כולו, וללחוץ שוב על הכניסה.'
+        : (TEST_COPY && code === 'no_row' ? NO_ROW_TEST : pick(SIGN_TEXT, code, SIGN_TEXT.retry));
       armGoogle();
     });
   }
@@ -411,7 +418,8 @@
   $('gear').addEventListener('click', function () { openSetup($('setup').classList.contains('hide')); });
   $('setupDone').addEventListener('click', function () { openSetup(false); window.scrollTo(0, 0); });
   $('myAdd').addEventListener('click', addMy);
-  $('build').textContent = 'גרסה ' + CAT.version;
+  $('build').textContent = 'גרסה ' + CAT.version + (TEST_COPY ? ' · עותק בדיקה' : '');
+  show('testnote', TEST_COPY);
   if (SIGNIN) startSignin();
   renderAll();
   if (firstRun && !SIGNIN) openSetup(true);
