@@ -350,8 +350,11 @@
     var box = $('usage');
     clear(box);
     box.appendChild(el('p', 'dim', 'טוען…'));
-    var names = { my: 'כפתור אישי' };
+    // Names for the table: the catalog's buttons, this person's own buttons from the sign-in (b1.7), and the two ids
+    // that were catalog buttons until b1.6, so that an old row is not shown as a bare id.
+    var names = { my: 'כפתור אישי', board: 'הלוח (עד b1.6)', questions: 'שאלות ומשימות (עד b1.6)' };
     L.eachButton(CAT, function (b) { names[b.id] = b.he; });
+    if (state.me) state.me.extra.forEach(function (x) { names[x.id] = x.he; });
     var asked = state.sid;
     return post({ a: 'usage', sid: asked }).then(function (ans) {
       if (state.sid !== asked) return;
