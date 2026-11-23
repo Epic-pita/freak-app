@@ -15,7 +15,7 @@
   'use strict';
 
   var CATALOG = {
-    version: 'b1.8',
+    version: 'b1.9',
     origin: 'https://epic-pita.github.io',
     groups: [
       { id: 'all', he: 'לכל הצוות', fixed: true, buttons: [
@@ -34,7 +34,7 @@
       ] },
       { id: 'owner', he: 'ניהול העסק', buttons: [
         { id: 'home', he: 'מסך הבית', sub: 'כל החנות בדף אחד', path: '/freak-pos/home.html' },
-        { id: 'suppliers', he: 'משימות הספקים', sub: 'מה להזמין ומה בדרך', path: '/freak-pos/suppliers.html' },
+        { id: 'suppliers', he: 'משימות הספקים', sub: 'מה להזמין ומה בדרך', path: '/freak-pos/tasks.html' },
         { id: 'order', he: 'הזמנה מספק', sub: 'דף ההזמנה', path: '/freak-pos/order.html' }
       ] },
       { id: 'guides', he: 'מדריכים', fixed: true, folded: true, buttons: [
